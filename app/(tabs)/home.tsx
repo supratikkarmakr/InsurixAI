@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { 
   View, 
-  Text, 
   StyleSheet, 
   TouchableOpacity, 
   Alert, 
@@ -12,6 +11,8 @@ import { router } from 'expo-router';
 import { supabase } from '@/services/supabase/client';
 import { useTheme } from '../../contexts/ThemeContext';
 import { ThemeToggle } from '../../components/ThemeToggle';
+import { Typography, Heading2, Heading3, Body, Caption } from '../../src/components/Typography';
+import { Text } from '../../src/components/Text';
 
 export default function HomeScreen() {
   const [user, setUser] = useState<any>(null);
@@ -346,8 +347,8 @@ export default function HomeScreen() {
       <View style={dynamicStyles.header}>
         <View style={dynamicStyles.headerTop}>
           <View style={dynamicStyles.greetingSection}>
-            <Text style={dynamicStyles.greeting}>Hello 👋 {getUserName()}!</Text>
-            <Text style={dynamicStyles.subGreeting}>{greeting}</Text>
+            <Heading2 weight="bold">Hello 👋 {getUserName()}!</Heading2>
+            <Body color={theme.textSecondary}>{greeting}</Body>
           </View>
           <ThemeToggle size="small" />
         </View>
@@ -356,11 +357,11 @@ export default function HomeScreen() {
         <View style={dynamicStyles.profileCard}>
           <View style={dynamicStyles.profileInfo}>
             <View style={dynamicStyles.profileAvatar}>
-              <Text style={dynamicStyles.avatarText}>{getUserName().charAt(0).toUpperCase()}</Text>
+              <Text weight="bold" size={20} color="#ffffff">{getUserName().charAt(0).toUpperCase()}</Text>
             </View>
             <View style={dynamicStyles.profileDetails}>
-              <Text style={dynamicStyles.profilePercent}>60%</Text>
-              <Text style={dynamicStyles.profileText}>Complete your profile easily</Text>
+              <Typography variant="h5" weight="bold">60%</Typography>
+              <Caption color={theme.textSecondary}>Complete your profile easily</Caption>
             </View>
           </View>
         </View>
@@ -370,31 +371,31 @@ export default function HomeScreen() {
       <View style={dynamicStyles.policyCard}>
         <View style={dynamicStyles.policyHeader}>
           <View style={dynamicStyles.policyIcon}>
-            <Text style={dynamicStyles.policyIconText}>✓</Text>
+            <Text weight="bold" size={14} color="#ffffff">✓</Text>
           </View>
-          <Text style={dynamicStyles.policyTitle}>Car Insurance</Text>
+          <Typography variant="h5" weight="bold">Car Insurance</Typography>
         </View>
-        <Text style={dynamicStyles.policyType}>Comprehensive</Text>
+        <Body color={theme.textSecondary}>Comprehensive</Body>
         
         <View style={dynamicStyles.policyDetails}>
           <View style={dynamicStyles.policyRow}>
             <View>
-              <Text style={dynamicStyles.policyLabel}>Policyholder</Text>
-              <Text style={dynamicStyles.policyValue}>Rahul Sharma</Text>
+              <Caption color={theme.textSecondary}>Policyholder</Caption>
+              <Text weight="semiBold" size={14}>Rahul Sharma</Text>
             </View>
             <View>
-              <Text style={dynamicStyles.policyLabel}>Policy Number</Text>
-              <Text style={dynamicStyles.policyValue}>MPO4CY9999</Text>
+              <Caption color={theme.textSecondary}>Policy Number</Caption>
+              <Text weight="semiBold" size={14}>MPO4CY9999</Text>
             </View>
           </View>
           
           <View style={dynamicStyles.policyFooter}>
             <View>
-              <Text style={dynamicStyles.policyLabel}>Third party validity</Text>
-              <Text style={dynamicStyles.policyValue}>10/02/25</Text>
+              <Caption color={theme.textSecondary}>Third party validity</Caption>
+              <Text weight="semiBold" size={14}>10/02/25</Text>
             </View>
             <TouchableOpacity style={dynamicStyles.renewButton}>
-              <Text style={dynamicStyles.renewButtonText}>Renew Now</Text>
+              <Text weight="semiBold" size={12} color="#ffffff">Renew Now</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -402,23 +403,23 @@ export default function HomeScreen() {
 
       {/* Health & Wellness Section */}
       <View style={dynamicStyles.section}>
-        <Text style={dynamicStyles.sectionTitle}>Health & Wellness</Text>
+        <Heading3 weight="bold">Health & Wellness</Heading3>
         <View style={dynamicStyles.iconRow}>
           <TouchableOpacity style={[dynamicStyles.iconCard, dynamicStyles.healthCard]}>
-            <Text style={dynamicStyles.iconEmoji}>❤️</Text>
-            <Text style={dynamicStyles.iconLabel}>Health</Text>
+            <Text size={24}>❤️</Text>
+            <Text weight="semiBold" size={12}>Health</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[dynamicStyles.iconCard, dynamicStyles.bikeCard]}>
-            <Text style={dynamicStyles.iconEmoji}>🚴</Text>
-            <Text style={dynamicStyles.iconLabel}>Bike</Text>
+            <Text size={24}>🚴</Text>
+            <Text weight="semiBold" size={12}>Bike</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[dynamicStyles.iconCard, dynamicStyles.homeCard]}>
-            <Text style={dynamicStyles.iconEmoji}>🏠</Text>
-            <Text style={dynamicStyles.iconLabel}>Home</Text>
+            <Text size={24}>🏠</Text>
+            <Text weight="semiBold" size={12}>Home</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[dynamicStyles.iconCard, dynamicStyles.travelCard]}>
-            <Text style={dynamicStyles.iconEmoji}>✈️</Text>
-            <Text style={dynamicStyles.iconLabel}>Travel</Text>
+            <Text size={24}>✈️</Text>
+            <Text weight="semiBold" size={12}>Travel</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -426,37 +427,37 @@ export default function HomeScreen() {
       {/* Quick Actions */}
       <View style={dynamicStyles.section}>
         <View style={dynamicStyles.sectionHeader}>
-          <Text style={dynamicStyles.sectionTitle}>Quick Actions</Text>
+          <Heading3 weight="bold">Quick Actions</Heading3>
           <TouchableOpacity>
-            <Text style={dynamicStyles.seeMore}>See {'>'}</Text>
+            <Text weight="semiBold" size={14} color={theme.primary}>See {'>'}</Text>
           </TouchableOpacity>
         </View>
         
         <TouchableOpacity style={dynamicStyles.actionCard} onPress={handleInstantClaim}>
           <View style={dynamicStyles.actionIcon}>
-            <Text style={dynamicStyles.actionEmoji}>📸</Text>
+            <Text size={20}>📸</Text>
           </View>
           <View style={dynamicStyles.actionContent}>
             <View style={dynamicStyles.actionHeader}>
-              <Text style={dynamicStyles.actionTitle}>Instant Claim</Text>
+              <Text weight="semiBold" size={16}>Instant Claim</Text>
               <View style={dynamicStyles.newBadge}>
-                <Text style={dynamicStyles.newBadgeText}>New</Text>
+                <Text weight="bold" size={10} color="#ffffff">New</Text>
               </View>
             </View>
-            <Text style={dynamicStyles.actionSubtitle}>Quick claim processing</Text>
+            <Caption color={theme.textSecondary}>Quick claim processing</Caption>
           </View>
         </TouchableOpacity>
         
         <TouchableOpacity style={dynamicStyles.actionCard}>
           <View style={dynamicStyles.actionIcon}>
-            <Text style={dynamicStyles.actionEmoji}>📍</Text>
+            <Text size={20}>📍</Text>
           </View>
           <View style={dynamicStyles.actionContent}>
             <View style={dynamicStyles.actionHeader}>
-              <Text style={dynamicStyles.actionTitle}>Find Local Services</Text>
-              <Text style={dynamicStyles.actionAmount}>+$134.00</Text>
+              <Text weight="semiBold" size={16}>Find Local Services</Text>
+              <Text weight="semiBold" size={14} color={theme.success}>+$134.00</Text>
             </View>
-            <Text style={dynamicStyles.actionSubtitle}>Weekly Savings</Text>
+            <Caption color={theme.textSecondary}>Weekly Savings</Caption>
           </View>
         </TouchableOpacity>
       </View>

@@ -1,7 +1,9 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StatusBar, StyleSheet, Image } from 'react-native';
+import { View, TouchableOpacity, StatusBar, StyleSheet, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
+import { Typography } from '../src/components/Typography';
+import { Text } from '../src/components/Text';
 
 export default function SplashScreen() {
   const handleGetStarted = () => {
@@ -27,7 +29,14 @@ export default function SplashScreen() {
           </View>
           
           {/* Tagline positioned below logo */}
-          <Text style={styles.tagline}>One app. All risks covered</Text>
+          <Text 
+            weight="medium" 
+            size={17} 
+            color="#ffffff" 
+            style={styles.tagline}
+          >
+            One app. All risks covered
+          </Text>
         </View>
 
         {/* Get Started button */}
@@ -35,7 +44,7 @@ export default function SplashScreen() {
           onPress={handleGetStarted}
           style={styles.button}
         >
-          <Text style={styles.buttonText}>Get Started</Text>
+          <Text weight="semiBold" size={18} color="#0891b2">Get Started</Text>
         </TouchableOpacity>
       </LinearGradient>
     </View>
@@ -68,11 +77,8 @@ const styles = StyleSheet.create({
     height: 270,
   },
   tagline: {
-    fontSize: 17,
-    color: '#ffffff',
-    opacity: 0.75,
     textAlign: 'center',
-    fontWeight: '500',
+    opacity: 0.75,
     letterSpacing: 0.5,
     paddingHorizontal: 20,
   },
@@ -93,10 +99,5 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.15,
     shadowRadius: 8,
     elevation: 5,
-  },
-  buttonText: {
-    color: '#0891b2',
-    fontSize: 18,
-    fontWeight: '600',
   },
 }); 

@@ -8,20 +8,21 @@ import {
   StyleSheet,
   ScrollView,
   KeyboardAvoidingView,
-  Platform,
-  Alert
+  Platform
 } from 'react-native';
 import { router } from 'expo-router';
 import { supabase } from '@/services/supabase/client';
+import { useCustomAlert } from '../../src/components/CustomAlert';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const { showAlert, AlertComponent } = useCustomAlert();
 
   const handleLogin = async () => {
     if (!email || !password) {
-      Alert.alert('Error', 'Please fill in all fields');
+      showAlert('Error', 'Please fill in all fields');
       return;
     }
 
@@ -34,19 +35,23 @@ export default function LoginScreen() {
       });
 
       if (error) {
-        Alert.alert('Login Failed', error.message);
+        showAlert('Login Failed', error.message);
         return;
       }
 
       if (data.user) {
         // Login successful
-        Alert.alert('Success', 'Login successful!');
-        router.replace('/(tabs)/home');
+        showAlert('Success', 'Login successful!', [
+          {
+            text: 'Continue',
+            onPress: () => router.replace('/(tabs)/home'),
+          }
+        ]);
       }
     } catch (error) {
       console.error('Login error:', error);
       const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred';
-      Alert.alert('Error', errorMessage);
+      showAlert('Error', errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -154,6 +159,8 @@ export default function LoginScreen() {
           </Text>
         </View>
       </ScrollView>
+      
+      <AlertComponent />
     </KeyboardAvoidingView>
   );
 }

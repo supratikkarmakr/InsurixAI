@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { router } from 'expo-router';
 import { supabase } from '@/services/supabase/client';
+import { useCustomAlert } from '../../src/components/CustomAlert';
 
 export default function RegisterScreen() {
   const [email, setEmail] = useState('');
@@ -21,20 +22,21 @@ export default function RegisterScreen() {
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const { showAlert, AlertComponent } = useCustomAlert();
 
   const handleRegister = async () => {
     if (!email || !password || !confirmPassword || !fullName) {
-      Alert.alert('Error', 'Please fill in all required fields');
+      showAlert('Error', 'Please fill in all required fields');
       return;
     }
 
     if (password !== confirmPassword) {
-      Alert.alert('Error', 'Passwords do not match');
+      showAlert('Error', 'Passwords do not match');
       return;
     }
 
     if (password.length < 6) {
-      Alert.alert('Error', 'Password must be at least 6 characters long');
+      showAlert('Error', 'Password must be at least 6 characters long');
       return;
     }
 
@@ -54,26 +56,26 @@ export default function RegisterScreen() {
       });
 
       if (error) {
-        Alert.alert('Registration Failed', error.message);
+        showAlert('Registration Failed', error.message);
         return;
       }
 
       if (data.user) {
         // Registration successful
-        Alert.alert(
-          'Success', 
-          'Registration successful! Please check your email to verify your account.',
+        showAlert(
+          'Registration Successful!',
+          'Please check your email to verify your account before logging in.',
           [
             {
-              text: 'OK',
-              onPress: () => router.replace('/(auth)/login')
+              text: 'Go to Login',
+              onPress: () => router.replace('/(auth)/login'),
             }
           ]
         );
       }
     } catch (error) {
-      Alert.alert('Error', 'An unexpected error occurred');
       console.error('Registration error:', error);
+      showAlert('Error', 'An unexpected error occurred');
     } finally {
       setIsLoading(false);
     }
@@ -199,6 +201,8 @@ export default function RegisterScreen() {
           </Text>
         </View>
       </ScrollView>
+      
+      <AlertComponent />
     </KeyboardAvoidingView>
   );
 }
