@@ -8,24 +8,25 @@ import {
   StyleSheet,
   ScrollView,
   KeyboardAvoidingView,
-  Platform,
-  Alert
+  Platform
 } from 'react-native';
 import { router } from 'expo-router';
 import { supabase } from '@/services/supabase/client';
+import { useCustomAlert } from '../../src/components/CustomAlert';
 
 export default function ForgotPasswordScreen() {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const { showAlert, AlertComponent } = useCustomAlert();
 
   const handleResetPassword = async () => {
     if (!email) {
-      Alert.alert('Error', 'Please enter your email address');
+      showAlert('Error', 'Please enter your email address');
       return;
     }
 
     if (!email.includes('@')) {
-      Alert.alert('Error', 'Please enter a valid email address');
+      showAlert('Error', 'Please enter a valid email address');
       return;
     }
 
@@ -33,27 +34,26 @@ export default function ForgotPasswordScreen() {
     
     try {
       const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
-        redirectTo: 'insurixai://reset-password',
+        redirectTo: `${window.location.origin}/reset-password`,
       });
 
       if (error) {
-        Alert.alert('Error', error.message);
+        showAlert('Error', error.message);
         return;
       }
 
-      // Success
-      Alert.alert(
-        'Check Your Email', 
-        'We have sent a password reset link to your email address. Please check your inbox and follow the instructions.',
+      showAlert(
+        'Password Reset Sent',
+        'Check your email for password reset instructions. If you don\'t see it, check your spam folder.',
         [
           {
-            text: 'OK',
-            onPress: () => router.back()
+            text: 'Back to Login',
+            onPress: () => router.back(),
           }
         ]
       );
     } catch (error) {
-      Alert.alert('Error', 'An unexpected error occurred');
+      showAlert('Error', 'An unexpected error occurred');
       console.error('Password reset error:', error);
     } finally {
       setIsLoading(false);
@@ -125,6 +125,8 @@ export default function ForgotPasswordScreen() {
           </Text>
         </View>
       </ScrollView>
+      
+      <AlertComponent />
     </KeyboardAvoidingView>
   );
 }

@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Platform } from 'react-native';
 
 export interface Theme {
   primary: string;
@@ -15,7 +16,27 @@ export interface Theme {
   successLight: string;
   error: string;
   warning: string;
+  fonts: {
+    light: string;
+    regular: string;
+    medium: string;
+    semiBold: string;
+    bold: string;
+  };
 }
+
+// Poppins fonts - very distinctive and noticeable
+const getPoppinsFonts = () => {
+  return {
+    light: 'Poppins_300Light',
+    regular: 'Poppins_400Regular',
+    medium: 'Poppins_500Medium',
+    semiBold: 'Poppins_600SemiBold',
+    bold: 'Poppins_700Bold',
+  };
+};
+
+const poppinsFonts = getPoppinsFonts();
 
 const lightTheme: Theme = {
   primary: '#14B8A6',
@@ -31,6 +52,7 @@ const lightTheme: Theme = {
   successLight: '#D1FAE5',
   error: '#EF4444',
   warning: '#F59E0B',
+  fonts: poppinsFonts,
 };
 
 const darkTheme: Theme = {
@@ -47,6 +69,7 @@ const darkTheme: Theme = {
   successLight: '#064E3B',
   error: '#EF4444',
   warning: '#F59E0B',
+  fonts: poppinsFonts,
 };
 
 interface ThemeContextType {

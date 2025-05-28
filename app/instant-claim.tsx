@@ -7,12 +7,12 @@ import {
   ScrollView,
   TextInput,
   StatusBar,
-  Alert,
 } from 'react-native';
 import { router } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
 import * as DocumentPicker from 'expo-document-picker';
 import { useTheme } from '../contexts/ThemeContext';
+import { useCustomAlert } from '../src/components/CustomAlert';
 
 // Vector icon components
 const CameraIcon = ({ size = 24, color = '#6B7280' }: { size?: number; color?: string }) => (
@@ -125,12 +125,13 @@ export default function InstantClaimScreen() {
   const [claimAmount, setClaimAmount] = useState('');
   const [description, setDescription] = useState('');
   const { theme, isDark } = useTheme();
+  const { showAlert, AlertComponent } = useCustomAlert();
 
   const handleUploadPhoto = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
     
     if (permissionResult.granted === false) {
-      Alert.alert('Permission Denied', 'Permission to access camera roll is required!');
+      showAlert('Permission Denied', 'Permission to access camera roll is required!');
       return;
     }
 
@@ -150,7 +151,7 @@ export default function InstantClaimScreen() {
     const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
     
     if (permissionResult.granted === false) {
-      Alert.alert('Permission Denied', 'Permission to access camera is required!');
+      showAlert('Permission Denied', 'Permission to access camera is required!');
       return;
     }
 
@@ -174,7 +175,7 @@ export default function InstantClaimScreen() {
 
       if (!result.canceled) {
         // Simulate OCR processing
-        Alert.alert(
+        showAlert(
           'Document Scanned',
           'OCR processing started. Claim details will be auto-filled shortly.',
           [
@@ -192,29 +193,29 @@ export default function InstantClaimScreen() {
         );
       }
     } catch (error) {
-      Alert.alert('Error', 'Failed to scan document');
+      showAlert('Error', 'Failed to scan document');
     }
   };
 
   const handleSubmitClaim = () => {
     if (!policyNumber || !incidentDate || !claimAmount || !description) {
-      Alert.alert('Error', 'Please fill in all required fields');
+      showAlert('Error', 'Please fill in all required fields');
       return;
     }
 
     if (selectedImages.length === 0) {
-      Alert.alert('Error', 'Please upload at least one photo of the damage');
+      showAlert('Error', 'Please upload at least one photo of the damage');
       return;
     }
 
-    Alert.alert(
+    showAlert(
       'Claim Submitted!',
       'Your claim has been submitted successfully. You will receive updates via email and SMS.',
       [
         {
           text: 'OK',
           onPress: () => router.back(),
-        },
+        }
       ]
     );
   };
@@ -558,6 +559,8 @@ export default function InstantClaimScreen() {
         {/* Bottom padding for navigation */}
         <View style={dynamicStyles.bottomPadding} />
       </ScrollView>
+      
+      <AlertComponent />
     </View>
   );
 } 
