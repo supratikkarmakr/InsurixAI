@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+python-multipart
+tensorflow
+numpy
+pillow
+opencv-python
+pydantic
+python-jose[cryptography]
+passlib[bcrypt]
+loguru 

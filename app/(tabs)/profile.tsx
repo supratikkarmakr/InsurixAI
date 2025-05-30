@@ -1,169 +1,479 @@
-import React from 'react';
-import { View, ScrollView, Text as RNText } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {
+  View,
+  ScrollView,
+  TouchableOpacity,
+  StatusBar,
+  StyleSheet,
+  Alert,
+} from 'react-native';
+import { router } from 'expo-router';
 import { useTheme } from '../../contexts/ThemeContext';
 import { Typography, Heading1, Heading2, Heading3, Body, Caption } from '../../src/components/Typography';
 import { Text } from '../../src/components/Text';
+import { supabase } from '../../src/services/supabase/client';
+import { useCustomAlert } from '../../src/components/CustomAlert';
 
 export default function ProfileScreen() {
-  const { theme } = useTheme();
+  const { theme, isDark } = useTheme();
+  const [user, setUser] = useState<any>(null);
+  const [claimsCount, setClaimsCount] = useState(0);
+  const { showAlert, AlertComponent } = useCustomAlert();
 
-  return (
-    <ScrollView style={{
+  useEffect(() => {
+    loadUserData();
+    loadClaimsCount();
+  }, []);
+
+  const loadUserData = async () => {
+    try {
+      const { data: { user }, error } = await supabase.auth.getUser();
+      if (error) {
+        console.error('Error loading user:', error);
+        return;
+      }
+      setUser(user);
+    } catch (error) {
+      console.error('Unexpected error loading user:', error);
+    }
+  };
+
+  const loadClaimsCount = async () => {
+    try {
+      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      if (userError || !user) return;
+
+      const { data, error } = await supabase
+        .from('claims')
+        .select('id')
+        .eq('user_id', user.id);
+
+      if (!error && data) {
+        setClaimsCount(data.length);
+      }
+    } catch (error) {
+      console.error('Error loading claims count:', error);
+    }
+  };
+
+  const getUserName = () => {
+    if (user?.user_metadata?.full_name) {
+      return user.user_metadata.full_name.split(' ')[0];
+    }
+    if (user?.email) {
+      return user.email.split('@')[0];
+    }
+    return 'User';
+  };
+
+  const getUserEmail = () => {
+    return user?.email || 'No email';
+  };
+
+  const handleSignOut = async () => {
+    showAlert(
+      'Sign Out',
+      'Are you sure you want to sign out?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Sign Out',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              await supabase.auth.signOut();
+              // Navigation will be handled by auth state change
+            } catch (error) {
+              console.error('Error signing out:', error);
+            }
+          },
+        },
+      ]
+    );
+  };
+
+  const dynamicStyles = StyleSheet.create({
+    container: {
       flex: 1,
       backgroundColor: theme.background,
-    }}>
-      <View style={{
-        padding: 20,
-        paddingTop: 60,
-      }}>
-        <Heading1 weight="bold" style={{ marginBottom: 20 }}>
-          Font Comparison Demo
-        </Heading1>
-        
-        {/* Font Comparison Section */}
-        <View style={{
-          backgroundColor: theme.surface,
-          padding: 20,
-          borderRadius: 12,
-          marginBottom: 20,
-          borderWidth: 1,
-          borderColor: theme.border,
-        }}>
-          <Heading2 weight="bold" style={{ marginBottom: 16 }}>
-            Before vs After
-          </Heading2>
-          
-          <View style={{ marginBottom: 20 }}>
-            <Caption color={theme.textSecondary} style={{ marginBottom: 8 }}>
-              OLD - React Native Default Font:
-            </Caption>
-            <RNText style={{ 
-              fontSize: 18, 
-              fontWeight: 'bold', 
-              color: theme.text,
-              marginBottom: 4
-            }}>
-              Hello! This is the default React Native font
-            </RNText>
-            <RNText style={{ 
-              fontSize: 14, 
-              color: theme.textSecondary
-            }}>
-              This text uses the system default font family
-            </RNText>
-          </View>
-          
-          <View style={{
-            height: 1,
-            backgroundColor: theme.border,
-            marginVertical: 20,
-          }} />
-          
-          <View>
-            <Caption color={theme.textSecondary} style={{ marginBottom: 8 }}>
-              NEW - Poppins Font (Product Sans Alternative):
-            </Caption>
-            <Text weight="bold" size={18} style={{ marginBottom: 4 }}>
-              Hello! This is the new Poppins font
-            </Text>
-            <Text size={14} color={theme.textSecondary}>
-              This text uses our new Poppins typography system
-            </Text>
-          </View>
-        </View>
-        
-        <View style={{
-          backgroundColor: theme.surface,
-          padding: 20,
-          borderRadius: 12,
-          marginBottom: 20,
-          borderWidth: 1,
-          borderColor: theme.border,
-        }}>
-          <Heading2 weight="bold" style={{ marginBottom: 16 }}>
-            Font Weights
-          </Heading2>
-          
-          <View style={{ marginBottom: 12 }}>
-            <Text weight="light" size={16}>Light Weight (300)</Text>
-          </View>
-          
-          <View style={{ marginBottom: 12 }}>
-            <Text weight="regular" size={16}>Regular Weight (400)</Text>
-          </View>
-          
-          <View style={{ marginBottom: 12 }}>
-            <Text weight="medium" size={16}>Medium Weight (500)</Text>
-          </View>
-          
-          <View style={{ marginBottom: 12 }}>
-            <Text weight="semiBold" size={16}>SemiBold Weight (600)</Text>
-          </View>
-          
-          <View style={{ marginBottom: 12 }}>
-            <Text weight="bold" size={16}>Bold Weight (700)</Text>
-          </View>
-        </View>
+    },
+    header: {
+      backgroundColor: theme.surface,
+      paddingHorizontal: 20,
+      paddingTop: 60,
+      paddingBottom: 20,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.border,
+    },
+    headerTop: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: 20,
+    },
+    profileSection: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    profileAvatar: {
+      width: 60,
+      height: 60,
+      borderRadius: 30,
+      backgroundColor: theme.primary,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginRight: 16,
+    },
+    avatarText: {
+      color: '#ffffff',
+      fontSize: 24,
+      fontWeight: 'bold',
+    },
+    profileInfo: {
+      flex: 1,
+    },
+    content: {
+      flex: 1,
+    },
+    section: {
+      backgroundColor: theme.surface,
+      margin: 16,
+      borderRadius: 16,
+      padding: 20,
+      shadowColor: theme.shadow,
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 4,
+      elevation: 3,
+    },
+    sectionTitle: {
+      fontSize: 18,
+      fontWeight: 'bold',
+      color: theme.text,
+      marginBottom: 16,
+    },
+    menuItem: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingVertical: 16,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.border,
+    },
+    lastMenuItem: {
+      borderBottomWidth: 0,
+    },
+    menuItemLeft: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      flex: 1,
+    },
+    menuIcon: {
+      width: 40,
+      height: 40,
+      borderRadius: 20,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginRight: 16,
+    },
+    menuItemText: {
+      flex: 1,
+    },
+    menuItemTitle: {
+      fontSize: 16,
+      fontWeight: '600',
+      color: theme.text,
+      marginBottom: 2,
+    },
+    menuItemSubtitle: {
+      fontSize: 14,
+      color: theme.textSecondary,
+    },
+    menuItemBadge: {
+      backgroundColor: theme.primary,
+      paddingHorizontal: 8,
+      paddingVertical: 4,
+      borderRadius: 12,
+      marginRight: 12,
+    },
+    badgeText: {
+      color: '#fff',
+      fontSize: 12,
+      fontWeight: 'bold',
+    },
+    newBadge: {
+      backgroundColor: theme.primary,
+      paddingHorizontal: 8,
+      paddingVertical: 4,
+      borderRadius: 12,
+      marginRight: 12,
+    },
+    chevron: {
+      color: theme.textSecondary,
+      fontSize: 18,
+    },
+    signOutButton: {
+      backgroundColor: theme.error,
+      margin: 16,
+      borderRadius: 12,
+      paddingVertical: 16,
+      alignItems: 'center',
+    },
+    signOutButtonText: {
+      color: '#fff',
+      fontSize: 16,
+      fontWeight: 'bold',
+    },
+    bottomPadding: {
+      height: 120,
+    },
+  });
 
-        <View style={{
-          backgroundColor: theme.surface,
-          padding: 20,
-          borderRadius: 12,
-          marginBottom: 20,
-          borderWidth: 1,
-          borderColor: theme.border,
-        }}>
-          <Heading2 weight="bold" style={{ marginBottom: 16 }}>
-            Typography Variants
-          </Heading2>
-          
-          <View style={{ marginBottom: 12 }}>
-            <Heading1>Heading 1 - 32px Bold</Heading1>
+  return (
+    <View style={dynamicStyles.container}>
+      <StatusBar 
+        barStyle={isDark ? 'light-content' : 'dark-content'} 
+        backgroundColor={theme.surface}
+      />
+      
+      {/* Header */}
+      <View style={dynamicStyles.header}>
+        <View style={dynamicStyles.headerTop}>
+          <View style={dynamicStyles.profileSection}>
+            <View style={dynamicStyles.profileAvatar}>
+              <Text style={dynamicStyles.avatarText}>
+                {getUserName().charAt(0).toUpperCase()}
+              </Text>
+            </View>
+            <View style={dynamicStyles.profileInfo}>
+              <Typography variant="h4" weight="bold">
+                {getUserName()}
+              </Typography>
+              <Body color={theme.textSecondary}>
+                {getUserEmail()}
+              </Body>
+            </View>
           </View>
-          
-          <View style={{ marginBottom: 12 }}>
-            <Heading2>Heading 2 - 28px Bold</Heading2>
-          </View>
-          
-          <View style={{ marginBottom: 12 }}>
-            <Heading3>Heading 3 - 24px SemiBold</Heading3>
-          </View>
-          
-          <View style={{ marginBottom: 12 }}>
-            <Typography variant="h4">Heading 4 - 20px SemiBold</Typography>
-          </View>
-          
-          <View style={{ marginBottom: 12 }}>
-            <Typography variant="h5">Heading 5 - 18px Medium</Typography>
-          </View>
-          
-          <View style={{ marginBottom: 12 }}>
-            <Body>Body Text - 16px Regular. This is perfect for reading long paragraphs of content with the new Poppins font family.</Body>
-          </View>
-          
-          <View style={{ marginBottom: 12 }}>
-            <Typography variant="body2">Body 2 - 14px Regular for smaller content</Typography>
-          </View>
-          
-          <View style={{ marginBottom: 12 }}>
-            <Caption>Caption - 12px Regular for fine print and details</Caption>
-          </View>
-        </View>
-
-        <View style={{
-          backgroundColor: theme.primary,
-          padding: 20,
-          borderRadius: 12,
-          marginBottom: 40,
-        }}>
-          <Text weight="bold" size={18} color="#ffffff" style={{ textAlign: 'center' }}>
-            🎉 Your app now uses Poppins font!
-          </Text>
-          <Text weight="regular" size={14} color="#ffffff" style={{ textAlign: 'center', marginTop: 8, opacity: 0.9 }}>
-            A beautiful alternative to Product Sans - the difference should be very visible!
-          </Text>
         </View>
       </View>
-    </ScrollView>
+
+      <ScrollView style={dynamicStyles.content} showsVerticalScrollIndicator={false}>
+        {/* Claims & Policies Section */}
+        <View style={dynamicStyles.section}>
+          <Text style={dynamicStyles.sectionTitle}>Insurance</Text>
+          
+          <TouchableOpacity 
+            style={dynamicStyles.menuItem}
+            onPress={() => router.push('/my-claims')}
+          >
+            <View style={dynamicStyles.menuItemLeft}>
+              <View style={[dynamicStyles.menuIcon, { backgroundColor: '#3B82F6' }]}>
+                <Text style={{ color: '#fff', fontSize: 18 }}>📋</Text>
+              </View>
+              <View style={dynamicStyles.menuItemText}>
+                <Text style={dynamicStyles.menuItemTitle}>My Claims</Text>
+                <Text style={dynamicStyles.menuItemSubtitle}>
+                  Track and manage your insurance claims
+                </Text>
+              </View>
+            </View>
+            {claimsCount > 0 && (
+              <View style={dynamicStyles.menuItemBadge}>
+                <Text style={dynamicStyles.badgeText}>{claimsCount}</Text>
+              </View>
+            )}
+            <Text style={dynamicStyles.chevron}>›</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={[dynamicStyles.menuItem, dynamicStyles.lastMenuItem]}
+            onPress={() => router.push('/(tabs)/policies')}
+          >
+            <View style={dynamicStyles.menuItemLeft}>
+              <View style={[dynamicStyles.menuIcon, { backgroundColor: '#10B981' }]}>
+                <Text style={{ color: '#fff', fontSize: 18 }}>📄</Text>
+              </View>
+              <View style={dynamicStyles.menuItemText}>
+                <Text style={dynamicStyles.menuItemTitle}>My Policies</Text>
+                <Text style={dynamicStyles.menuItemSubtitle}>
+                  View and manage your insurance policies
+                </Text>
+              </View>
+            </View>
+            <Text style={dynamicStyles.chevron}>›</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Account Section */}
+        <View style={dynamicStyles.section}>
+          <Text style={dynamicStyles.sectionTitle}>Account</Text>
+          
+          <TouchableOpacity style={dynamicStyles.menuItem}>
+            <View style={dynamicStyles.menuItemLeft}>
+              <View style={[dynamicStyles.menuIcon, { backgroundColor: '#8B5CF6' }]}>
+                <Text style={{ color: '#fff', fontSize: 18 }}>👤</Text>
+              </View>
+              <View style={dynamicStyles.menuItemText}>
+                <Text style={dynamicStyles.menuItemTitle}>Personal Information</Text>
+                <Text style={dynamicStyles.menuItemSubtitle}>
+                  Update your profile and contact details
+                </Text>
+              </View>
+            </View>
+            <Text style={dynamicStyles.chevron}>›</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={dynamicStyles.menuItem}>
+            <View style={dynamicStyles.menuItemLeft}>
+              <View style={[dynamicStyles.menuIcon, { backgroundColor: '#F59E0B' }]}>
+                <Text style={{ color: '#fff', fontSize: 18 }}>🔒</Text>
+              </View>
+              <View style={dynamicStyles.menuItemText}>
+                <Text style={dynamicStyles.menuItemTitle}>Privacy & Security</Text>
+                <Text style={dynamicStyles.menuItemSubtitle}>
+                  Manage your privacy settings and security
+                </Text>
+              </View>
+            </View>
+            <Text style={dynamicStyles.chevron}>›</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={[dynamicStyles.menuItem, dynamicStyles.lastMenuItem]}>
+            <View style={dynamicStyles.menuItemLeft}>
+              <View style={[dynamicStyles.menuIcon, { backgroundColor: '#EF4444' }]}>
+                <Text style={{ color: '#fff', fontSize: 18 }}>🔔</Text>
+              </View>
+              <View style={dynamicStyles.menuItemText}>
+                <Text style={dynamicStyles.menuItemTitle}>Notifications</Text>
+                <Text style={dynamicStyles.menuItemSubtitle}>
+                  Configure your notification preferences
+                </Text>
+              </View>
+            </View>
+            <Text style={dynamicStyles.chevron}>›</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Support Section */}
+        <View style={dynamicStyles.section}>
+          <Text style={dynamicStyles.sectionTitle}>Support</Text>
+          
+          <TouchableOpacity style={dynamicStyles.menuItem}>
+            <View style={dynamicStyles.menuItemLeft}>
+              <View style={[dynamicStyles.menuIcon, { backgroundColor: '#06B6D4' }]}>
+                <Text style={{ color: '#fff', fontSize: 18 }}>💬</Text>
+              </View>
+              <View style={dynamicStyles.menuItemText}>
+                <Text style={dynamicStyles.menuItemTitle}>Help & Support</Text>
+                <Text style={dynamicStyles.menuItemSubtitle}>
+                  Get help with your insurance questions
+                </Text>
+              </View>
+            </View>
+            <Text style={dynamicStyles.chevron}>›</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={dynamicStyles.menuItem}>
+            <View style={dynamicStyles.menuItemLeft}>
+              <View style={[dynamicStyles.menuIcon, { backgroundColor: '#84CC16' }]}>
+                <Text style={{ color: '#fff', fontSize: 18 }}>⭐</Text>
+              </View>
+              <View style={dynamicStyles.menuItemText}>
+                <Text style={dynamicStyles.menuItemTitle}>Rate Our App</Text>
+                <Text style={dynamicStyles.menuItemSubtitle}>
+                  Share your feedback and rate our app
+                </Text>
+              </View>
+            </View>
+            <Text style={dynamicStyles.chevron}>›</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={[dynamicStyles.menuItem, dynamicStyles.lastMenuItem]}>
+            <View style={dynamicStyles.menuItemLeft}>
+              <View style={[dynamicStyles.menuIcon, { backgroundColor: '#6B7280' }]}>
+                <Text style={{ color: '#fff', fontSize: 18 }}>ℹ️</Text>
+              </View>
+              <View style={dynamicStyles.menuItemText}>
+                <Text style={dynamicStyles.menuItemTitle}>About</Text>
+                <Text style={dynamicStyles.menuItemSubtitle}>
+                  App version and legal information
+                </Text>
+              </View>
+            </View>
+            <Text style={dynamicStyles.chevron}>›</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Smart Features Section */}
+        <View style={dynamicStyles.section}>
+          <Text style={dynamicStyles.sectionTitle}>Smart Features</Text>
+          
+          <TouchableOpacity 
+            style={dynamicStyles.menuItem}
+            onPress={() => router.push('/instant-claim-enhanced')}
+          >
+            <View style={dynamicStyles.menuItemLeft}>
+              <View style={[dynamicStyles.menuIcon, { backgroundColor: '#F59E0B' }]}>
+                <Text style={{ color: '#fff', fontSize: 18 }}>🤖</Text>
+              </View>
+              <View style={dynamicStyles.menuItemText}>
+                <Text style={dynamicStyles.menuItemTitle}>AI Instant Claims</Text>
+                <Text style={dynamicStyles.menuItemSubtitle}>
+                  Quick claim processing with AI analysis
+                </Text>
+              </View>
+            </View>
+            <View style={dynamicStyles.newBadge}>
+              <Text style={dynamicStyles.badgeText}>New</Text>
+            </View>
+            <Text style={dynamicStyles.chevron}>›</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={dynamicStyles.menuItem}
+            onPress={() => router.push('/(tabs)/voice-assistant')}
+          >
+            <View style={dynamicStyles.menuItemLeft}>
+              <View style={[dynamicStyles.menuIcon, { backgroundColor: '#06B6D4' }]}>
+                <Text style={{ color: '#fff', fontSize: 18 }}>🎙️</Text>
+              </View>
+              <View style={dynamicStyles.menuItemText}>
+                <Text style={dynamicStyles.menuItemTitle}>Voice Assistant</Text>
+                <Text style={dynamicStyles.menuItemSubtitle}>
+                  Get help with voice commands
+                </Text>
+              </View>
+            </View>
+            <Text style={dynamicStyles.chevron}>›</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={[dynamicStyles.menuItem, dynamicStyles.lastMenuItem]}>
+            <View style={dynamicStyles.menuItemLeft}>
+              <View style={[dynamicStyles.menuIcon, { backgroundColor: '#EF4444' }]}>
+                <Text style={{ color: '#fff', fontSize: 18 }}>🚨</Text>
+              </View>
+              <View style={dynamicStyles.menuItemText}>
+                <Text style={dynamicStyles.menuItemTitle}>Emergency Services</Text>
+                <Text style={dynamicStyles.menuItemSubtitle}>
+                  Quick access to emergency support
+                </Text>
+              </View>
+            </View>
+            <Text style={dynamicStyles.chevron}>›</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Sign Out Button */}
+        <TouchableOpacity 
+          style={dynamicStyles.signOutButton}
+          onPress={handleSignOut}
+        >
+          <Text style={dynamicStyles.signOutButtonText}>Sign Out</Text>
+        </TouchableOpacity>
+
+        <View style={dynamicStyles.bottomPadding} />
+      </ScrollView>
+      
+      <AlertComponent />
+    </View>
   );
 } 

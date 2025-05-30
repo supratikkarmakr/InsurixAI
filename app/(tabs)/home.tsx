@@ -21,33 +21,52 @@ export default function HomeScreen() {
 
   useEffect(() => {
     // Get initial user
-    supabase.auth.getUser().then(({ data: { user } }) => {
+    loadUserData();
+    updateGreeting();
+    
+    const interval = setInterval(() => {
+      updateGreeting();
+    }, 60000); // Update every minute
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const loadUserData = async () => {
+    try {
+      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      if (userError || !user) return;
+
       setUser(user);
-    });
+    } catch (error) {
+      console.error('Error loading user data:', error);
+    }
+  };
 
-    // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setUser(session?.user ?? null);
-      }
-    );
-
-    // Set time-based greeting
+  const updateGreeting = () => {
     const hour = new Date().getHours();
     if (hour < 12) setGreeting('Good morning');
     else if (hour < 17) setGreeting('Good afternoon');
     else setGreeting('Good evening');
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const handleInstantClaim = () => {
-    router.push('/instant-claim' as any);
   };
 
-  const getUserName = () => {
+  const handleInstantClaim = () => {
+    router.push('/instant-claim-enhanced' as any);
+  };
+
+  const handleAITest = () => {
+    router.push('/ai-test' as any);
+  };
+
+  const getUserName = (fullName = false) => {
     if (user?.user_metadata?.full_name) {
-      return user.user_metadata.full_name.split(' ')[0];
+      const name = user.user_metadata.full_name;
+      if (fullName) {
+        // Capitalize each word in the full name
+        return name.split(' ').map((word: string) => 
+          word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+        ).join(' ');
+      }
+      return name.split(' ')[0];
     }
     return user?.email?.split('@')[0] || 'Supratik';
   };
@@ -238,6 +257,7 @@ export default function HomeScreen() {
       flexDirection: 'row',
       justifyContent: 'space-between',
       gap: 12,
+      marginTop: 16,
     },
     iconCard: {
       flex: 1,
@@ -354,7 +374,10 @@ export default function HomeScreen() {
         </View>
         
         {/* Profile Completion */}
-        <View style={dynamicStyles.profileCard}>
+        <TouchableOpacity 
+          style={dynamicStyles.profileCard}
+          onPress={() => router.push('/(tabs)/profile')}
+        >
           <View style={dynamicStyles.profileInfo}>
             <View style={dynamicStyles.profileAvatar}>
               <Text weight="bold" size={20} color="#ffffff">{getUserName().charAt(0).toUpperCase()}</Text>
@@ -364,7 +387,7 @@ export default function HomeScreen() {
               <Caption color={theme.textSecondary}>Complete your profile easily</Caption>
             </View>
           </View>
-        </View>
+        </TouchableOpacity>
       </View>
 
       {/* Policy Card */}
@@ -381,7 +404,7 @@ export default function HomeScreen() {
           <View style={dynamicStyles.policyRow}>
             <View>
               <Caption color={theme.textSecondary}>Policyholder</Caption>
-              <Text weight="semiBold" size={14}>Rahul Sharma</Text>
+              <Text weight="semiBold" size={14}>{getUserName(true)}</Text>
             </View>
             <View>
               <Caption color={theme.textSecondary}>Policy Number</Caption>
@@ -445,6 +468,21 @@ export default function HomeScreen() {
               </View>
             </View>
             <Caption color={theme.textSecondary}>Quick claim processing</Caption>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={dynamicStyles.actionCard} onPress={handleAITest}>
+          <View style={dynamicStyles.actionIcon}>
+            <Text size={20}>🤖</Text>
+          </View>
+          <View style={dynamicStyles.actionContent}>
+            <View style={dynamicStyles.actionHeader}>
+              <Text weight="semiBold" size={16}>AI Service Test</Text>
+              <View style={dynamicStyles.newBadge}>
+                <Text weight="bold" size={10} color="#ffffff">Test</Text>
+              </View>
+            </View>
+            <Caption color={theme.textSecondary}>Check ML model status</Caption>
           </View>
         </TouchableOpacity>
         

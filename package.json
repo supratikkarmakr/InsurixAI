@@ -17,6 +17,8 @@
     "@expo-google-fonts/poppins": "^0.4.0",
     "@react-native-async-storage/async-storage": "1.23.1",
     "@supabase/supabase-js": "^2.39.3",
+    "@types/axios": "^0.14.4",
+    "axios": "^1.9.0",
     "expo": "~51.0.28",
     "expo-av": "~14.0.7",
     "expo-camera": "~15.0.14",

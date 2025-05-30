@@ -14,6 +14,7 @@ import {
 import { router } from 'expo-router';
 import { supabase } from '@/services/supabase/client';
 import { useCustomAlert } from '../../src/components/CustomAlert';
+import { useTheme } from '../../contexts/ThemeContext';
 
 export default function RegisterScreen() {
   const [email, setEmail] = useState('');
@@ -23,6 +24,7 @@ export default function RegisterScreen() {
   const [phone, setPhone] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { showAlert, AlertComponent } = useCustomAlert();
+  const { theme, isDark } = useTheme();
 
   const handleRegister = async () => {
     if (!email || !password || !confirmPassword || !fullName) {
@@ -85,46 +87,140 @@ export default function RegisterScreen() {
     router.back();
   };
 
+  const dynamicStyles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: theme.background,
+    },
+    scrollContainer: {
+      flexGrow: 1,
+      paddingHorizontal: 24,
+      paddingVertical: 32,
+    },
+    header: {
+      alignItems: 'center',
+      marginTop: 40,
+      marginBottom: 32,
+    },
+    logoEmoji: {
+      fontSize: 64,
+      marginBottom: 24,
+    },
+    title: {
+      fontSize: 28,
+      fontWeight: 'bold',
+      color: theme.text,
+      marginBottom: 8,
+    },
+    subtitle: {
+      fontSize: 16,
+      color: theme.textSecondary,
+      textAlign: 'center',
+    },
+    form: {
+      flex: 1,
+    },
+    inputContainer: {
+      marginBottom: 20,
+    },
+    label: {
+      fontSize: 16,
+      fontWeight: '600',
+      color: theme.text,
+      marginBottom: 8,
+    },
+    input: {
+      borderWidth: 1,
+      borderColor: theme.border,
+      borderRadius: 12,
+      paddingHorizontal: 16,
+      paddingVertical: 14,
+      fontSize: 16,
+      backgroundColor: theme.inputBackground,
+      color: theme.text,
+    },
+    registerButton: {
+      backgroundColor: theme.primary,
+      borderRadius: 12,
+      paddingVertical: 16,
+      alignItems: 'center',
+      marginTop: 8,
+      marginBottom: 24,
+    },
+    registerButtonDisabled: {
+      backgroundColor: theme.textSecondary,
+    },
+    registerButtonText: {
+      color: '#ffffff',
+      fontSize: 16,
+      fontWeight: '600',
+    },
+    signInContainer: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    signInText: {
+      color: theme.textSecondary,
+      fontSize: 14,
+    },
+    signInLink: {
+      color: theme.primary,
+      fontSize: 14,
+      fontWeight: '600',
+    },
+    footer: {
+      marginTop: 24,
+      paddingTop: 24,
+    },
+    footerText: {
+      fontSize: 12,
+      color: theme.textSecondary,
+      textAlign: 'center',
+      lineHeight: 18,
+    },
+  });
+
   return (
     <KeyboardAvoidingView 
-      style={styles.container}
+      style={dynamicStyles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
+      <StatusBar barStyle={isDark ? "light-content" : "dark-content"} backgroundColor={theme.background} />
       
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <ScrollView contentContainerStyle={dynamicStyles.scrollContainer}>
         {/* Header */}
-        <View style={styles.header}>
-          <Text style={styles.logoEmoji}>🛡️</Text>
-          <Text style={styles.title}>Create Account</Text>
-          <Text style={styles.subtitle}>Join InsurixAI and protect what matters</Text>
+        <View style={dynamicStyles.header}>
+          <Text style={dynamicStyles.logoEmoji}>🛡️</Text>
+          <Text style={dynamicStyles.title}>Create Account</Text>
+          <Text style={dynamicStyles.subtitle}>Join InsurixAI and protect what matters</Text>
         </View>
 
         {/* Form */}
-        <View style={styles.form}>
+        <View style={dynamicStyles.form}>
           {/* Full Name Input */}
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Full Name *</Text>
+          <View style={dynamicStyles.inputContainer}>
+            <Text style={dynamicStyles.label}>Full Name *</Text>
             <TextInput
-              style={styles.input}
+              style={dynamicStyles.input}
               value={fullName}
               onChangeText={setFullName}
               placeholder="Enter your full name"
-              placeholderTextColor="#9CA3AF"
+              placeholderTextColor={theme.textSecondary}
               autoCapitalize="words"
               autoCorrect={false}
             />
           </View>
 
           {/* Email Input */}
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Email Address *</Text>
+          <View style={dynamicStyles.inputContainer}>
+            <Text style={dynamicStyles.label}>Email Address *</Text>
             <TextInput
-              style={styles.input}
+              style={dynamicStyles.input}
               value={email}
               onChangeText={setEmail}
               placeholder="Enter your email"
-              placeholderTextColor="#9CA3AF"
+              placeholderTextColor={theme.textSecondary}
               keyboardType="email-address"
               autoCapitalize="none"
               autoCorrect={false}
@@ -132,27 +228,27 @@ export default function RegisterScreen() {
           </View>
 
           {/* Phone Input */}
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Phone Number</Text>
+          <View style={dynamicStyles.inputContainer}>
+            <Text style={dynamicStyles.label}>Phone Number</Text>
             <TextInput
-              style={styles.input}
+              style={dynamicStyles.input}
               value={phone}
               onChangeText={setPhone}
               placeholder="Enter your phone number"
-              placeholderTextColor="#9CA3AF"
+              placeholderTextColor={theme.textSecondary}
               keyboardType="phone-pad"
             />
           </View>
 
           {/* Password Input */}
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Password *</Text>
+          <View style={dynamicStyles.inputContainer}>
+            <Text style={dynamicStyles.label}>Password *</Text>
             <TextInput
-              style={styles.input}
+              style={dynamicStyles.input}
               value={password}
               onChangeText={setPassword}
               placeholder="Create a password"
-              placeholderTextColor="#9CA3AF"
+              placeholderTextColor={theme.textSecondary}
               secureTextEntry
               autoCapitalize="none"
               autoCorrect={false}
@@ -160,14 +256,14 @@ export default function RegisterScreen() {
           </View>
 
           {/* Confirm Password Input */}
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Confirm Password *</Text>
+          <View style={dynamicStyles.inputContainer}>
+            <Text style={dynamicStyles.label}>Confirm Password *</Text>
             <TextInput
-              style={styles.input}
+              style={dynamicStyles.input}
               value={confirmPassword}
               onChangeText={setConfirmPassword}
               placeholder="Confirm your password"
-              placeholderTextColor="#9CA3AF"
+              placeholderTextColor={theme.textSecondary}
               secureTextEntry
               autoCapitalize="none"
               autoCorrect={false}
@@ -176,27 +272,27 @@ export default function RegisterScreen() {
 
           {/* Register Button */}
           <TouchableOpacity
-            style={[styles.registerButton, isLoading && styles.registerButtonDisabled]}
+            style={[dynamicStyles.registerButton, isLoading && dynamicStyles.registerButtonDisabled]}
             onPress={handleRegister}
             disabled={isLoading}
           >
-            <Text style={styles.registerButtonText}>
+            <Text style={dynamicStyles.registerButtonText}>
               {isLoading ? 'Creating Account...' : 'Create Account'}
             </Text>
           </TouchableOpacity>
 
           {/* Sign In Link */}
-          <View style={styles.signInContainer}>
-            <Text style={styles.signInText}>Already have an account? </Text>
+          <View style={dynamicStyles.signInContainer}>
+            <Text style={dynamicStyles.signInText}>Already have an account? </Text>
             <TouchableOpacity onPress={handleSignIn}>
-              <Text style={styles.signInLink}>Sign In</Text>
+              <Text style={dynamicStyles.signInLink}>Sign In</Text>
             </TouchableOpacity>
           </View>
         </View>
 
         {/* Footer */}
-        <View style={styles.footer}>
-          <Text style={styles.footerText}>
+        <View style={dynamicStyles.footer}>
+          <Text style={dynamicStyles.footerText}>
             By creating an account, you agree to our Terms of Service and Privacy Policy
           </Text>
         </View>
@@ -205,97 +301,4 @@ export default function RegisterScreen() {
       <AlertComponent />
     </KeyboardAvoidingView>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ffffff',
-  },
-  scrollContainer: {
-    flexGrow: 1,
-    paddingHorizontal: 24,
-    paddingVertical: 32,
-  },
-  header: {
-    alignItems: 'center',
-    marginTop: 40,
-    marginBottom: 32,
-  },
-  logoEmoji: {
-    fontSize: 64,
-    marginBottom: 24,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#1F2937',
-    marginBottom: 8,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: '#6B7280',
-    textAlign: 'center',
-  },
-  form: {
-    flex: 1,
-  },
-  inputContainer: {
-    marginBottom: 20,
-  },
-  label: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#374151',
-    marginBottom: 8,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#D1D5DB',
-    borderRadius: 12,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-    fontSize: 16,
-    backgroundColor: '#F9FAFB',
-  },
-  registerButton: {
-    backgroundColor: '#3B82F6',
-    borderRadius: 12,
-    paddingVertical: 16,
-    alignItems: 'center',
-    marginTop: 8,
-    marginBottom: 24,
-  },
-  registerButtonDisabled: {
-    backgroundColor: '#9CA3AF',
-  },
-  registerButtonText: {
-    color: '#ffffff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  signInContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  signInText: {
-    color: '#6B7280',
-    fontSize: 14,
-  },
-  signInLink: {
-    color: '#3B82F6',
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  footer: {
-    marginTop: 32,
-    paddingTop: 24,
-  },
-  footerText: {
-    fontSize: 12,
-    color: '#9CA3AF',
-    textAlign: 'center',
-    lineHeight: 18,
-  },
-}); 
+} 

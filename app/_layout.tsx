@@ -38,6 +38,9 @@ function AppContent() {
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="instant-claim" options={{ headerShown: false }} />
+        <Stack.Screen name="instant-claim-enhanced" options={{ headerShown: false }} />
+        <Stack.Screen name="my-claims" options={{ headerShown: false }} />
+        <Stack.Screen name="ai-test" options={{ headerShown: false }} />
       </Stack>
     </View>
   );
