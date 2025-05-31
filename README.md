@@ -29,7 +29,7 @@
 - **🔐 Secure Authentication**: Aadhaar-based KYC with Supabase backend
 - **💾 Real-time Database**: Instant synchronization across devices
 - **🎨 Modern UI/UX**: Clean, intuitive interface with dark/light theme support
-- **⚡ OCR Integration**: Auto-fill forms by scanning policy documents
+- **⚡ OCR Integration**: Auto-fill forms by scanning policy documents*
 
 ---
 
@@ -91,7 +91,7 @@
 ### Top Section
 ```
 ┌─────────────────────────────────────┐
-│ 🌅 Good morning, XYZ            │
+│ 🌅 Good morning, XYZ               │
 │ 👤 Profile (60% complete)          │
 │ 🎤 AI Assistant                    │   
 └─────────────────────────────────────┘
@@ -106,7 +106,7 @@
 
 | Field | Example |
 |-------|---------|
-| **Policyholder** | Rahul Sharma |
+| **Policyholder** | XYZ |
 | **Policy Number** | MPO4CY9999 |
 | **Third-party Validity** | 10/02/25 |
 | **Policy Type** | Comprehensive |
@@ -146,7 +146,7 @@
 ### Step 1: 📸 Photo Capture/Upload
 ```
 ┌─────────────────┐    ┌─────────────────┐
-│   📤 Upload     │ OR │   📸 Camera     │
+│   📤 Upload     │ OR │   📸 Camera    │
 │   from Device   │    │   Capture       │
 └─────────────────┘    └─────────────────┘
 ```
@@ -179,7 +179,7 @@
 
 ---
 
-## 🔌 OCR Integration
+## 🔌 OCR Integration*
 
 ### Auto-Fill Feature
 ```
@@ -258,7 +258,7 @@ Content-Type: application/json
 - **Database**: Supabase (PostgreSQL)
 - **Authentication**: Supabase Auth with Row Level Security
 - **AI Processing**: FastAPI + TensorFlow
-- **OCR**: Tesseract.js
+- **OCR**: Tesseract.js*
 - **Image Processing**: OpenCV
 - **Voice AI**: DeepSeek API
 
@@ -624,7 +624,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👥 Authors
 
 - **Supratik Karmakar** - *Lead Developer* - [@supratikkarmakr](https://github.com/supratikkarmakr)
-- Email: karmakarsupratik10@gmail.com
+- **Sohani Hazra** - *Frontend Developer* - ()
+- **Chandrima Nandi** - *ML Developer* - ()
 
 ---
 
@@ -634,7 +635,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Supabase** - For the powerful backend-as-a-service platform  
 - **TensorFlow** - For the machine learning capabilities
 - **React Native Community** - For the amazing ecosystem
-
+- *: *these features are not yet launched, yet planned*
 ---
 
 ## 📞 Support
@@ -649,5 +650,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
   <h3>🌟 Star this repository if you found it helpful! 🌟</h3>
   <p>Made with ❤️ for the future of insurance technology in India</p>
   
-**[Website](https://insurixai.com) • [Documentation](https://docs.insurixai.com) • [API Reference](https://api.insurixai.com)**
 </div>
