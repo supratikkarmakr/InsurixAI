@@ -91,7 +91,7 @@
 ### Top Section
 ```
 ┌─────────────────────────────────────┐
-│ 🌅 Good morning, XYZ            │
+│ 🌅 Good morning, XYZ               │
 │ 👤 Profile (60% complete)          │
 │ 🎤 AI Assistant                    │   
 └─────────────────────────────────────┘
@@ -106,7 +106,7 @@
 
 | Field | Example |
 |-------|---------|
-| **Policyholder** | Rahul Sharma |
+| **Policyholder** | XYZ |
 | **Policy Number** | MPO4CY9999 |
 | **Third-party Validity** | 10/02/25 |
 | **Policy Type** | Comprehensive |
