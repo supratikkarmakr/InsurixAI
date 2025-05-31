@@ -615,17 +615,11 @@ We welcome contributions! Please follow these steps:
 
 ---
 
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
 ## 👥 Authors
 
 - **Supratik Karmakar** - *Lead Developer* - [@supratikkarmakr](https://github.com/supratikkarmakr)
-- **Sohani Hazra** - *Frontend Developer* - ()
-- **Chandrima Nandi** - *ML Developer* - ()
+- **Sohani Hazra** - *Frontend Developer* - [@]()
+- **Chandrima Nandi** - *ML Developer* - [@ChandrimaNandi](https://github.com/ChandrimaNandi)
 
 ---
 
