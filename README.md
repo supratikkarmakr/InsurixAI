@@ -691,7 +691,7 @@ We welcome contributions! Please follow these steps:
 - **Supabase** - For the powerful backend-as-a-service platform  
 - **TensorFlow** - For the machine learning capabilities
 - **React Native Community** - For the amazing ecosystem
-- *  "*" *ndicates that those features are currently under development.*
+- "*" *indicates that those features are currently under development.*
 
 <div align="center">
   <h3>🌟 Star this repository if you found it helpful! 🌟</h3>
