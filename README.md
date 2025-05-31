@@ -618,7 +618,7 @@ We welcome contributions! Please follow these steps:
 ## 👥 Authors
 
 - **Supratik Karmakar** - *Lead Developer* - [@supratikkarmakr](https://github.com/supratikkarmakr)
-- **Sohani Hazra** - *Frontend Developer* - [@]()
+- **Sohani Hazra** - *Frontend Developer* - [@Sohani Hazra](https://github.com/soho-star)
 - **Chandrima Nandi** - *ML Developer* - [@ChandrimaNandi](https://github.com/ChandrimaNandi)
 
 ---
