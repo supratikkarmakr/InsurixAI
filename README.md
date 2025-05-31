@@ -29,7 +29,7 @@
 - **🔐 Secure Authentication**: Aadhaar-based KYC with Supabase backend
 - **💾 Real-time Database**: Instant synchronization across devices
 - **🎨 Modern UI/UX**: Clean, intuitive interface with dark/light theme support
-- **⚡ OCR Integration**: Auto-fill forms by scanning policy documents
+- **⚡ OCR Integration**: Auto-fill forms by scanning policy documents *
 
 ---
 
@@ -54,7 +54,7 @@
 ├── 📊 Damage Classification
 ├── 📍 Location Detection
 ├── 🔬 Feature Extraction
-└── 🔍 OCR Processing (Tesseract)
+└── 🔍 OCR Processing (Tesseract) *
 ```
 
 ### Database (Supabase)
@@ -146,7 +146,7 @@
 ### Step 1: 📸 Photo Capture/Upload
 ```
 ┌─────────────────┐    ┌─────────────────┐
-│   📤 Upload     │ OR │   📸 Camera     │
+│   📤 Upload     │ OR │   📸 Camera    │
 │   from Device   │    │   Capture       │
 └─────────────────┘    └─────────────────┘
 ```
@@ -250,7 +250,7 @@ Content-Type: application/json
 - **React Native** 0.74.5 with TypeScript
 - **Expo** 51.0 with Expo Router
 - **UI Framework**: React Native Paper
-- **Styling**: Tailwind CSS / NativeWind
+- **Styling**: NativeWind
 - **State Management**: Zustand
 - **Forms**: React Hook Form
 
@@ -260,7 +260,7 @@ Content-Type: application/json
 - **AI Processing**: FastAPI + TensorFlow
 - **OCR**: Tesseract.js
 - **Image Processing**: OpenCV
-- **Voice AI**: DeepSeek API
+- **Voice AI**: DeepSeek API *
 
 ### Development Tools
 - **Navigation**: Expo Router (file-based)
@@ -465,6 +465,7 @@ npm start
 
 ### 🎨 Splash Screen & Authentication
 <img src="assets/images/Screenshot_20250530-205251.png" width="250" alt="InsurixAI Splash Screen">
+&nbsp;&nbsp;&nbsp;&nbsp;
 <img src="assets/images/Screenshot_20250530-192025.png" width="250" alt="Login Screen">
 
 *Elegant onboarding experience with "One app. All risks covered" tagline and secure authentication options including Aadhaar integration*
@@ -473,6 +474,7 @@ npm start
 
 ### 🏠 Home Dashboard & Profile
 <img src="assets/images/Screenshot_20250530-190606.png" width="250" alt="Home Dashboard">
+&nbsp;&nbsp;&nbsp;&nbsp;
 <img src="assets/images/Screenshot_20250530-205544.png" width="250" alt="Profile Management">
 
 *Personalized dashboard with smart greetings, policy overview, and comprehensive profile management with 60% completion tracking*
@@ -481,6 +483,7 @@ npm start
 
 ### 🤖 AI-Enhanced Instant Claim
 <img src="assets/images/Screenshot_20250530-201017.png" width="250" alt="AI-Enhanced Instant Claim">
+&nbsp;&nbsp;&nbsp;&nbsp;
 <img src="assets/images/Screenshot_20250530-205511.png" width="250" alt="Claims History">
 
 *Revolutionary AI-powered claim processing with comprehensive analysis types and detailed claim tracking with confidence scores*
@@ -688,15 +691,7 @@ We welcome contributions! Please follow these steps:
 - **Supabase** - For the powerful backend-as-a-service platform  
 - **TensorFlow** - For the machine learning capabilities
 - **React Native Community** - For the amazing ecosystem
-
----
-
-## 📞 Support
-
-- 💬 **Issues**: [GitHub Issues](https://github.com/supratikkarmakr/InsurixAI/issues)
-- 📖 **Documentation**: [Project Wiki](https://github.com/supratikkarmakr/InsurixAI/wiki)
-
----
+- *  *denotes that those features are undergoing*
 
 <div align="center">
   <h3>🌟 Star this repository if you found it helpful! 🌟</h3>
