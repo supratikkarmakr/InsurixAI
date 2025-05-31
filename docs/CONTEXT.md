@@ -8,7 +8,6 @@ InsurixAI is a comprehensive mobile application designed to revolutionize the in
 
 **Key Features:**
 - 🤖 AI-powered damage assessment
-- 📸 OCR-based document scanning
 - 🎤 Voice assistant integration
 - ⚡ Instant claim processing
 - 🔐 Secure Aadhaar-based authentication
@@ -36,7 +35,7 @@ InsurixAI is a comprehensive mobile application designed to revolutionize the in
 ### Top Section
 ```
 ┌─────────────────────────────────────┐
-│ 🌅 Good morning, Rahul             │
+│ 🌅 Good morning, XYZ            │
 │ 👤 Profile (60% complete)          │
 │                                     │   
 └─────────────────────────────────────┘
@@ -791,25 +790,9 @@ npm run test:components
 
 ---
 
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
 ## 🤝 Contributing
 
 We welcome contributions! Please read our [Contributing Guidelines](CONTRIBUTING.md) for details on how to submit pull requests, report issues, and suggest improvements.
-
----
-
-## 📞 Support
-
-- 📧 **Email**: support@insurixai.com
-- 💬 **Chat**: Available in-app 24/7
-- 📱 **Helpline**: +91-XXXX-XXXXXX
-
----
 
 <div align="center">
 
