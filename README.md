@@ -348,16 +348,16 @@ CREATE TABLE claims (
 
 ---
 
-## 🎤 AI Assistant Capabilities
+## 🎤 AI Assistant Capabilities *
 
 ### Core Functions
-- 🗣️ **Policy Management**: Add new policies via voice commands
+- 🗣️ **Policy Management**: Add new policies via voice commands 
 - 📚 **Education**: Explain complex insurance terms in simple language
 - 📊 **Tracking**: Provide real-time claim status updates
 - 🗺️ **Location Services**: Find nearest garages, hospitals, service centers
 - 💬 **Support**: 24/7 customer assistance in multiple languages
 
-### Voice Commands Examples
+### Voice Commands Examples *
 ```
 "Add my new car insurance policy"
 "What's the status of my claim MPO4CY9999?"
@@ -377,7 +377,7 @@ CREATE TABLE claims (
 - **Expo CLI**: `npm install -g @expo/cli`
 - **Git LFS**: For handling large ML model files
 - **Supabase Account**: For database & authentication
-- **DeepSeek API Key**: For AI processing
+- **DeepSeek API Key**: For AI processing *
 
 ### 1️⃣ Clone Repository
 ```bash
@@ -465,7 +465,7 @@ npm start
 
 ### 🎨 Splash Screen & Authentication
 <img src="assets/images/Screenshot_20250530-205251.png" width="250" alt="InsurixAI Splash Screen">
-&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <img src="assets/images/Screenshot_20250530-192025.png" width="250" alt="Login Screen">
 
 *Elegant onboarding experience with "One app. All risks covered" tagline and secure authentication options including Aadhaar integration*
@@ -474,7 +474,7 @@ npm start
 
 ### 🏠 Home Dashboard & Profile
 <img src="assets/images/Screenshot_20250530-190606.png" width="250" alt="Home Dashboard">
-&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <img src="assets/images/Screenshot_20250530-205544.png" width="250" alt="Profile Management">
 
 *Personalized dashboard with smart greetings, policy overview, and comprehensive profile management with 60% completion tracking*
@@ -483,8 +483,8 @@ npm start
 
 ### 🤖 AI-Enhanced Instant Claim
 <img src="assets/images/Screenshot_20250530-201017.png" width="250" alt="AI-Enhanced Instant Claim">
-&nbsp;&nbsp;&nbsp;&nbsp;
-<img src="assets/images/Screenshot_20250530-205511.png" width="250" alt="Claims History">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="assets/images/Screenshot_20250531-214635.png" width="250" alt="Claim Process">
 
 *Revolutionary AI-powered claim processing with comprehensive analysis types and detailed claim tracking with confidence scores*
 
