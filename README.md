@@ -24,7 +24,7 @@
 
 - **🤖 AI-Powered Damage Detection**: Advanced computer vision models analyze vehicle damage in real-time
 - **📸 Instant Claim Processing**: Photo capture → AI analysis → Auto-filled claim forms in seconds
-- **🎤 Voice Assistant Integration**: 24/7 AI assistant for policy management and support
+- **🎤 Voice Assistant Integration**: 24/7 AI assistant for policy management and support *
 - **📱 Cross-Platform Mobile App**: Native performance on iOS and Android
 - **🔐 Secure Authentication**: Aadhaar-based KYC with Supabase backend
 - **💾 Real-time Database**: Instant synchronization across devices
