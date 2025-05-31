@@ -520,6 +520,22 @@ npm start
 
 ---
 
+## 🎥 Live Demo Video
+
+<div align="center">
+
+### 📱 **InsurixAI App Demonstration**
+
+[![InsurixAI Demo Video](https://img.youtube.com/vi/fO19gvXHiaw/maxresdefault.jpg)](https://youtu.be/fO19gvXHiaw?si=lefE8Yl4YixzzJoi)
+
+**🎬 [Watch Full Demo on YouTube](https://youtu.be/fO19gvXHiaw?si=lefE8Yl4YixzzJoi)**
+
+*Click the video above to see InsurixAI in action! Experience the complete user journey from onboarding to AI-powered claim processing.*
+
+</div>
+
+---
+
 ## 🛠️ Development
 
 ### Project Structure
