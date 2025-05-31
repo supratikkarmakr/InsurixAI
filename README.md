@@ -29,7 +29,7 @@
 - **🔐 Secure Authentication**: Aadhaar-based KYC with Supabase backend
 - **💾 Real-time Database**: Instant synchronization across devices
 - **🎨 Modern UI/UX**: Clean, intuitive interface with dark/light theme support
-- **⚡ OCR Integration**: Auto-fill forms by scanning policy documents*
+- **⚡ OCR Integration**: Auto-fill forms by scanning policy documents
 
 ---
 
@@ -91,7 +91,7 @@
 ### Top Section
 ```
 ┌─────────────────────────────────────┐
-│ 🌅 Good morning, XYZ               │
+│ 🌅 Good morning, XYZ            │
 │ 👤 Profile (60% complete)          │
 │ 🎤 AI Assistant                    │   
 └─────────────────────────────────────┘
@@ -106,7 +106,7 @@
 
 | Field | Example |
 |-------|---------|
-| **Policyholder** | XYZ |
+| **Policyholder** | Rahul Sharma |
 | **Policy Number** | MPO4CY9999 |
 | **Third-party Validity** | 10/02/25 |
 | **Policy Type** | Comprehensive |
@@ -146,7 +146,7 @@
 ### Step 1: 📸 Photo Capture/Upload
 ```
 ┌─────────────────┐    ┌─────────────────┐
-│   📤 Upload     │ OR │   📸 Camera    │
+│   📤 Upload     │ OR │   📸 Camera     │
 │   from Device   │    │   Capture       │
 └─────────────────┘    └─────────────────┘
 ```
@@ -179,7 +179,7 @@
 
 ---
 
-## 🔌 OCR Integration*
+## 🔌 OCR Integration
 
 ### Auto-Fill Feature
 ```
@@ -258,7 +258,7 @@ Content-Type: application/json
 - **Database**: Supabase (PostgreSQL)
 - **Authentication**: Supabase Auth with Row Level Security
 - **AI Processing**: FastAPI + TensorFlow
-- **OCR**: Tesseract.js*
+- **OCR**: Tesseract.js
 - **Image Processing**: OpenCV
 - **Voice AI**: DeepSeek API
 
@@ -459,6 +459,64 @@ npm start
 
 ---
 
+## 📸 App Screenshots
+
+<div align="center">
+
+### 🎨 Splash Screen & Authentication
+<img src="assets/images/Screenshot_20250530-205251.png" width="250" alt="InsurixAI Splash Screen">
+<img src="assets/images/Screenshot_20250530-192025.png" width="250" alt="Login Screen">
+
+*Elegant onboarding experience with "One app. All risks covered" tagline and secure authentication options including Aadhaar integration*
+
+---
+
+### 🏠 Home Dashboard & Profile
+<img src="assets/images/Screenshot_20250530-190606.png" width="250" alt="Home Dashboard">
+<img src="assets/images/Screenshot_20250530-205544.png" width="250" alt="Profile Management">
+
+*Personalized dashboard with smart greetings, policy overview, and comprehensive profile management with 60% completion tracking*
+
+---
+
+### 🤖 AI-Enhanced Instant Claim
+<img src="assets/images/Screenshot_20250530-201017.png" width="250" alt="AI-Enhanced Instant Claim">
+<img src="assets/images/Screenshot_20250530-205511.png" width="250" alt="Claims History">
+
+*Revolutionary AI-powered claim processing with comprehensive analysis types and detailed claim tracking with confidence scores*
+
+</div>
+
+### ✨ Key UI Features Showcased
+
+#### 🎨 **Modern Dark Theme Design**
+- Sleek dark interface with teal accent colors
+- Professional typography and spacing
+- Intuitive iconography and visual hierarchy
+
+#### 🔄 **Smart Progress Tracking**
+- Step-by-step claim submission flow (1→2→3)
+- Real-time AI analysis status indicators
+- Profile completion percentage with visual feedback
+
+#### 🤖 **AI Integration Highlights**
+- "AI Ready" status indicators
+- Comprehensive vs Basic analysis options
+- ML confidence scores (87%, 95%) displayed prominently
+- Real-time damage detection results
+
+#### 📊 **Data-Rich Interfaces**
+- Detailed claim information with amounts ($14,200, $40,000)
+- Policy details with renewal dates and validity periods
+- Comprehensive insurance portfolio (Health, Bike, Home, Travel)
+
+#### 🎯 **User-Centric Navigation**
+- Bottom tab navigation with microphone for AI assistant
+- Quick actions prominently displayed
+- "Tap to view details" interactive elements
+
+---
+
 ## 🛠️ Development
 
 ### Project Structure
@@ -623,18 +681,18 @@ We welcome contributions! Please follow these steps:
 
 ---
 
+
 ## 🙏 Acknowledgments
 
 - **Expo Team** - For the excellent React Native framework
 - **Supabase** - For the powerful backend-as-a-service platform  
 - **TensorFlow** - For the machine learning capabilities
 - **React Native Community** - For the amazing ecosystem
-- *: *these features are not yet launched, yet planned*
+
 ---
 
 ## 📞 Support
 
-- 📧 **Email**: karmakarsupratik10@gmail.com
 - 💬 **Issues**: [GitHub Issues](https://github.com/supratikkarmakr/InsurixAI/issues)
 - 📖 **Documentation**: [Project Wiki](https://github.com/supratikkarmakr/InsurixAI/wiki)
 
@@ -643,5 +701,5 @@ We welcome contributions! Please follow these steps:
 <div align="center">
   <h3>🌟 Star this repository if you found it helpful! 🌟</h3>
   <p>Made with ❤️ for the future of insurance technology in India</p>
-  
+
 </div>
