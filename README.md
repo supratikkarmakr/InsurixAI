@@ -13,7 +13,6 @@
   <h3>🚗 One App. All Risks Covered</h3>
   <p><em>Instant damage detection • Automated claim processing • AI-powered assistance</em></p>
 </div>
-
 ---
 
 ## 🌟 Overview
